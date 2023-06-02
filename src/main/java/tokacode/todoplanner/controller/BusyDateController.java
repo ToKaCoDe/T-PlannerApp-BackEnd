@@ -17,6 +17,7 @@ import tokacode.todoplanner.model.AppResponse;
 import tokacode.todoplanner.model.BusyDate;
 import tokacode.todoplanner.model.MainInfo;
 import tokacode.todoplanner.service.BusyDateService;
+import tokacode.todoplanner.service.FreeDateService;
 
 @RestController
 @RequestMapping("/busyDate")
@@ -29,7 +30,11 @@ public class BusyDateController {
 	
 	@Autowired
 	private BusyDateService busyDateService;
-
+	
+	@Autowired
+	private FreeDateService freeDateService;
+	
+	
 	@PostMapping("/add")
 	public String add(@RequestBody BusyDate busydate) {
 		busyDateService.saveBusyDate(busydate);
@@ -48,6 +53,8 @@ public class BusyDateController {
 
 	@PostMapping("/submit")
 	public void submit(@RequestBody MainInfo maininfo) {
+		
+		freeDateService.deleteAllFreeDates();
 
 		Logic logic = new Logic();
 
@@ -57,7 +64,11 @@ public class BusyDateController {
 
 		logic.busyDays = busyDateService.getAllBusydatesBetween(logic.startdate, logic.deadline);
 		
+		
 		hoursperday = logic.getAverageHours();
+		
+		freeDateService.saveFreeDate(logic.freeDays);
+		
 		answer = logic.isTaskDone();
 		
 	}

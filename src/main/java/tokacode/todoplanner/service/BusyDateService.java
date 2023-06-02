@@ -14,5 +14,5 @@ public interface BusyDateService {
 	public void deleteAllBusyDates();
 	
 	public List<BusyDate> getAllBusydatesBetween(LocalDate startDate, LocalDate endDate);
-
+	
 }
