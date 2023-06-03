@@ -1,6 +1,7 @@
 package tokacode.todoplanner.controller;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,9 +59,15 @@ public class BusyDateController {
 
 		Logic logic = new Logic();
 
-		logic.startdate = LocalDate.parse(maininfo.getStartdate());
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+		
+		LocalDateTime std = LocalDateTime.parse(maininfo.getStartdate(), formatter);
+		logic.startdate = std.toLocalDate();
+		
+		LocalDateTime dl = LocalDateTime.parse(maininfo.getDeadline(), formatter);
+		logic.deadline = dl.toLocalDate();
+		
 		logic.scope = Integer.parseInt(maininfo.getScope());
-		logic.deadline = LocalDate.parse(maininfo.getDeadline());
 
 		logic.busyDays = busyDateService.getAllBusydatesBetween(logic.startdate, logic.deadline);
 		
