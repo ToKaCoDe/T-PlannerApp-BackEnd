@@ -10,7 +10,7 @@ or
 
 Run As Java Application from your IDE - /todoplanner/src/main/java/tokacode/todoplanner/TodoplannerApplication.java
 
-Aplication start on port(s): 8070
+Aplication start on port: 8070
 
 ## Running tests
 
